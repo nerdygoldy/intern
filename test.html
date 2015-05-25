@@ -1,0 +1,13 @@
+
+	<div ng-controller="myCtrl">
+		<form ng-model="emp" ng-readonly="!iseditable">
+			Name: <input type="text" ng-model="emp.name" ng-readonly="!iseditable"><br>
+			Age: <input type="text" ng-model="emp.age" ng-readonly="!iseditable"><br>
+			<div ng-repeat="x in emp.hobbies">
+				Hobby: <input type="text" ng-model="x.hobby" ng-readonly="!iseditable"><br>
+			</div>
+			<button ng-click="addHobby()" ng-show="iseditable">Add a Hobby</button><br>
+			<button ng-click="submit()" ng-show="iseditable">Submit</button>
+			<button ng-click="edit()">Edit</button>
+		</form>
+	</div>
