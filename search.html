@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Search</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.11.2/select.css" rel="stylesheet" type="text/css"></link>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.11.2/select.js"></script>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+	  
+	
+</head>
+
+<body ng-app="myApp" >
+	
+	
+	
+	<div ng-controller="myCtrl" style="height:100px;width:300px">
+		<p>Selected: {{simple.selected}}</p>
+		<ui-select ng-model="simple.selected" >
+		  <ui-select-match placeholder="Please Select">{{$select.selected}}</ui-select-match>
+		  <ui-select-choices repeat="item in numbers" refresh="refreshTypeahead($select.search)"
+ 			refresh-delay="0">
+		    <div ng-bind-html="item"></div>
+		  </ui-select-choices>
+		</ui-select>
+	</div>
+
+	<script>
+	
+		var app = angular.module('myApp', ['ngSanitize','ui.select']);
+		app.controller('myCtrl',function($scope,$http){
+			$scope.simple = {};
+			$scope.numbers = [];
+			
+			$scope.refreshTypeahead = function(search){
+				//console.log("refresh");
+				$http({
+				    url: "http://HYRDWS1481:8080/myServer/names", 
+				    method: "GET",
+				    params: {searchtext: search}
+				 }).success(function(res, status) {
+						console.log(res);
+						$scope.numbers=res.split(',');
+						
+					});
+			};
+			
+		});
+		
+	</script>
+
+
+
+</body>
+
+
+</html>
